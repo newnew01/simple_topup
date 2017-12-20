@@ -45,6 +45,9 @@
     .status_msg_error{
       color: red;
     }
+    .loading_balance{
+      height: 15px;
+    }
   </style>
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
@@ -67,7 +70,7 @@
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="hidden-xs">ยอดเงินคงเหลือ: <% balance %> บาท</span>
+                <span class="hidden-xs">ยอดเงินคงเหลือ: <span ng-bind-html="balance"></span> บาท</span>
               </a>
             </li>
           </ul>

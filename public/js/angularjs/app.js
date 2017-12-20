@@ -10,7 +10,7 @@ app.controller('topupController', function($scope,$http) {
     $scope.username = 'bmV3bmV3MDE=';
     $scope.password = 'bmV3a2h1bmcwMQ=='
     $scope.users = branch_name;
-    $scope.balance = '0';
+    $scope.balance = '<img src="/image/loading.gif" class="loading_balance">';
     $scope.orderid = '';
     $scope.content_topup_status = "<img class='status_icon' src='/image/loading.gif'><h3>กำลังทำรายการ...</h3>";
 
