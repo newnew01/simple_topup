@@ -22,7 +22,7 @@ Route::get('/topup/{token}', function ($token) {
         $token_data = substr( $token_data, 4, strlen($token_data) );
         $splitData = explode('@', $token_data, 2);
         $date_time = Carbon::now()->addHour($shiftHour);
-        $date_time_access = Carbon::createFromFormat('dmYhi', $splitData[0]);
+        $date_time_access = Carbon::createFromFormat('dmYHi', $splitData[0]);
         if($date_time_access->addMinute(10) > $date_time){
             //echo 'OK'.$date_time_access.'|'.$date_time;
 
