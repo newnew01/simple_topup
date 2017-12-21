@@ -57,11 +57,19 @@
   <header class="main-header">
     <nav class="navbar navbar-static-top">
       <div class="container">
+
+
         <div class="navbar-header">
-          <img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px">
+          <a href="../../index2.html" class="navbar-brand" style="padding: 0"><img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px"></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
+        </div>
+
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#" ng-click="showTopupHistory()"><i class="fa fa-fw fa-history"></i> ประวัติการเติมเงิน (รายวัน)</a></li>
+          </ul>
         </div>
 
         <!-- /.navbar-collapse -->
@@ -333,6 +341,52 @@
           <h4 class="modal-title">ผลการเติมเงิน</h4>
         </div>
         <div class="modal-body text-center" ng-bind-html="content_topup_status">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">ปิด</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div class="modal fade" id="modal-topup-history">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-history"></i> ประวัติการเติมเงิน (รายวัน)</h4>
+        </div>
+        <div class="modal-body">
+
+            <table class="table table-hover">
+              <tbody><tr>
+                <th>หมายเลขรายการ</th>
+                <th>วัน-เวลา</th>
+                <th>สาขา</th>
+                <th>เครือข่าย</th>
+                <th>หมายเลข</th>
+                <th>ยอดเงิน</th>
+                <th>สถานะ</th>
+              </tr>
+              <tr ng-if="topup_histories.length == 0">
+                <td class="text-center">ไม่มีข้อมูล</td>
+              </tr>
+              <tr ng-repeat="data in topup_histories">
+                <td><% data.orderid %></td>
+                <td><% data.created_at %></td>
+                <td><% data.branch_name %></td>
+                <td><% data.network %></td>
+                <td><% data.number %></td>
+                <td><% data.cash %></td>
+                <td><span class="label label-warning" ng-if="data.status == 0">กำลังดำเนินการ</span><span class="label label-success" ng-if="data.status == 1">สำเร็จ</span><span class="label label-danger" ng-if="data.status == 2">ไม่สำเร็จ</span></td>
+              </tr>
+              </tbody>
+            </table>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-block" data-dismiss="modal">ปิด</button>

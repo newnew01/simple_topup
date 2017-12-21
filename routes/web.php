@@ -16,7 +16,7 @@ use App\User;
 use Carbon\Carbon;
 
 Route::get('/topup/{token}', function ($token) {
-    $shiftHour = 7;
+    $shiftHour = 0;
     $token_data = base64_decode($token);
     if(substr( $token_data, 0, 4 ) === "aBcD"){
         $token_data = substr( $token_data, 4, strlen($token_data) );
