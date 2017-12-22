@@ -16,14 +16,14 @@ use App\User;
 use Carbon\Carbon;
 
 Route::get('/topup/{token}', function ($token) {
-    $shiftHour = 7;
+    $shiftHour = 0;
     $token_data = base64_decode($token);
     if(substr( $token_data, 0, 4 ) === "aBcD"){
         $token_data = substr( $token_data, 4, strlen($token_data) );
         $splitData = explode('@', $token_data, 2);
         $date_time = Carbon::now()->addHour($shiftHour);
         $date_time_access = Carbon::createFromFormat('dmYHi', $splitData[0]);
-        if($date_time_access->addMinute(10) > $date_time){
+        if($date_time_access->addMinute(5) > $date_time){
             //echo 'OK'.$date_time_access.'|'.$date_time;
 
             $user = User::where('name','=',$splitData[1]);

@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/log/new','LogController@newLog');
+Route::post('/log/update/','LogController@updateLogStatus');
+Route::get('/log/today/','LogController@getTodayLog');

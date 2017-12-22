@@ -16,6 +16,8 @@ app.controller('topupController', function($scope,$http) {
 
     $scope.timerCheckStatus = null;
 
+    $scope.topup_histories = [];
+
 
     $scope.reloadBalance = function () {
         $http.post("http://topup.newphone-function.trade/api/balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
@@ -50,6 +52,8 @@ app.controller('topupController', function($scope,$http) {
         //setInterval($scope.testfunc, 3000);
 
 
+
+
         $http.post("http://topup.newphone-function.trade/api/topup_refill",data)
             .then(function(response) {
                 //alert(response.data.AMOUNT);
@@ -59,6 +63,15 @@ app.controller('topupController', function($scope,$http) {
                 }else{
                     $scope.orderid = response.data.ORDERID;
                     $scope.timerCheckStatus = setInterval($scope.checkTopupStatus, 5000);
+
+                    network_name = ['no_data','AIS','DTAC','TRUE',' I-MOBILE 3GX','MY by CAT','AIS เติมเงินไม่เพิ่มวัน','PENGOIN']
+                    $http.post("/api/log/new",{'orderid':$scope.orderid,'network':network_name[network],'branch_name':users,'number':number,'cash':cash})
+                        .then(function(response) {
+                            if(response.data == 'sucess')
+                                console.log('create log success');
+                            else
+                                console.log('create log failed');
+                    });
                 }
             });
 
@@ -74,19 +87,35 @@ app.controller('topupController', function($scope,$http) {
             .then(function(response) {
                 if(response.data.STATUS == 1){
                     if(response.data.STATUS_REFILL == 1){
+                        $http.post("/api/log/update",{'orderid':$scope.orderid,'status':1})
+                            .then(function(response) {
+                                if(response.data == 'sucess')
+                                    console.log('update log success [1]');
+                                else
+                                    console.log('update log failed');
+                            });
                         $scope.showStatusSuccess('การทำรายการสำเร็จ');
                         clearInterval($scope.timerCheckStatus);
                         $scope.clearData();
                         $scope.orderid = '';
                         $scope.reloadBalance();
+
                     }
 
                     if(response.data.STATUS_CANCEL == 1){
+                        $http.post("/api/log/update",{'orderid':$scope.orderid,'status':2})
+                            .then(function(response) {
+                                if(response.data == 'sucess')
+                                    console.log('update log success [2]');
+                                else
+                                    console.log('update log failed');
+                            });
                         $scope.showStatusError('ผิดพลาด: กรุณาตรวจสอบเครือข่ายมือถือของท่าน')
                         clearInterval($scope.timerCheckStatus);
                         $scope.clearData();
                         $scope.orderid = '';
                         $scope.reloadBalance();
+
                     }
                 }else {
                     $scope.showStatusError(response.data.DETAIL)
@@ -97,6 +126,16 @@ app.controller('topupController', function($scope,$http) {
                 }
 
             });
+    }
+
+    $scope.showTopupHistory = function () {
+        $http.get("/api/log/today")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.topup_histories = response.data;
+                $('#modal-topup-history').modal('show');
+            });
+
     }
 
     $scope.showStatusSuccess = function (msg) {
