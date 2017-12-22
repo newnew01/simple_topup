@@ -55,7 +55,7 @@ class LogController extends Controller
         $start = (new Carbon('now'))->hour(0)->minute(0)->second(0);
         $end = (new Carbon('now'))->hour(23)->minute(59)->second(59);
 
-        $logs = TopupLog::whereBetween('created_at', [$start , $end])->get();
+        $logs = TopupLog::whereBetween('created_at', [$start , $end])->latest()->get();
 
         return $logs;
     }

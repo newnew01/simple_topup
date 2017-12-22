@@ -51,6 +51,6 @@ Route::get('/topup/{token}', function ($token) {
 });
 
 Route::get('/test_topup', function () {
-    $user = User::find(1);
-    return view('topup')->with(compact('user'));
+    //$user = User::find(1);
+    //return view('topup')->with(compact('user'));
 });
