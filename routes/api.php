@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/log/new','LogController@newLog');
 Route::post('/log/update/','LogController@updateLogStatus');
 Route::get('/log/today/','LogController@getTodayLog');
+Route::get('/log/today/report','LogController@getTodayReport');
+Route::get('/log/today/report-total','LogController@getTodayReportTotal');
