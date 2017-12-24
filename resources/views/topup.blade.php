@@ -414,7 +414,7 @@
               <table class="table table-hover">
                 <tbody>
                 <tr>
-                  <th colspan="2" class="text-center" bgcolor="#f7f7f7">สรุปยอดรวม</th>
+                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดรวม</th>
                 </tr>
                 <tr>
                   <th>สาขา</th>
@@ -434,7 +434,7 @@
               <table class="table table-hover">
                 <tbody>
                 <tr>
-                  <th colspan="3" class="text-center" bgcolor="#f7f7f7">สรุปยอดรวมตามเครือข่าย</th>
+                  <th colspan="3" class="text-center" bgcolor="##d0d0d0">สรุปยอดรวมตามเครือข่าย</th>
                 </tr>
                 <tr>
                   <th>สาขา</th>
