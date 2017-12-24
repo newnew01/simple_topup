@@ -60,7 +60,7 @@
 
 
         <div class="navbar-header">
-          <a href="../../index2.html" class="navbar-brand" style="padding: 0"><img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px"></a>
+          <a href="#" class="navbar-brand" style="padding: 0"><img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px"></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
