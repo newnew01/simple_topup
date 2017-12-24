@@ -230,7 +230,7 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/my.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="my_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถยกเลิกได้)" ng-model="my_number">
                 <br>
                 <select class="form-control" ng-model="my_cash">
                   <option value="">คลิกเลือกราคา</option>
@@ -299,7 +299,7 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/penguinsim.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="pengoin_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร  (ไม่สามารถยกเลิกได้)" ng-model="pengoin_number">
                 <br>
                 <select class="form-control" ng-model="pengoin_cash">
                   <option value="">คลิกเลือกราคา</option>
