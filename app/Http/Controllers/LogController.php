@@ -59,4 +59,24 @@ class LogController extends Controller
 
         return $logs;
     }
+
+    public function getTodayReport()
+    {
+        $start = (new Carbon('now'))->hour(0)->minute(0)->second(0);
+        $end = (new Carbon('now'))->hour(23)->minute(59)->second(59);
+        $reports = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','1')->groupBy('branch_name','network')->
+        selectRaw('sum(cash) as sum, branch_name,network')->get();
+
+        return $reports;
+    }
+
+    public function getTodayReportTotal()
+    {
+        $start = (new Carbon('now'))->hour(0)->minute(0)->second(0);
+        $end = (new Carbon('now'))->hour(23)->minute(59)->second(59);
+        $report_totals = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','1')->groupBy('branch_name')->
+        selectRaw('sum(cash) as sum, branch_name')->get();
+
+        return $report_totals;
+    }
 }

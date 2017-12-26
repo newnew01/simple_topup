@@ -60,7 +60,7 @@
 
 
         <div class="navbar-header">
-          <a href="../../index2.html" class="navbar-brand" style="padding: 0"><img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px"></a>
+          <a href="#" class="navbar-brand" style="padding: 0"><img src="/logo/logo_sm_text_right.png" height="40px" style="margin-top:5px"></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -69,6 +69,7 @@
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="#" ng-click="showTopupHistory()"><i class="fa fa-fw fa-history"></i> ประวัติการเติมเงิน (รายวัน)</a></li>
+            <li><a href="#" ng-click="getTodayReport()"><i class="fa fa-fw fa-list"></i> สรุปเติมเงิน (รายวัน)</a></li>
           </ul>
         </div>
 
@@ -229,7 +230,7 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/my.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="my_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถยกเลิกได้)" ng-model="my_number">
                 <br>
                 <select class="form-control" ng-model="my_cash">
                   <option value="">คลิกเลือกราคา</option>
@@ -298,7 +299,7 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/penguinsim.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="pengoin_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร  (ไม่สามารถยกเลิกได้)" ng-model="pengoin_number">
                 <br>
                 <select class="form-control" ng-model="pengoin_cash">
                   <option value="">คลิกเลือกราคา</option>
@@ -386,6 +387,75 @@
               </tr>
               </tbody>
             </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">ปิด</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <div class="modal fade" id="modal-topup-report">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-list"></i> สรุปเติมเงิน (รายวัน)</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดรวม</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>ยอดรวม</th>
+                </tr>
+                <tr ng-if="todayReportTotal.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in todayReportTotal">
+                  <td><% data.branch_name %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดรวมตามเครือข่าย</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>เครือข่าย</th>
+                  <th>ยอดเงิน</th>
+
+                </tr>
+                <tr ng-if="todayReport.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in todayReport">
+                  <td><% data.branch_name %></td>
+                  <td><% data.network %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
 
         </div>
         <div class="modal-footer">

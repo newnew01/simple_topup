@@ -18,6 +18,9 @@ app.controller('topupController', function($scope,$http) {
 
     $scope.topup_histories = [];
 
+    $scope.todayReport = [];
+    $scope.todayReportTotal = [];
+
 
     $scope.reloadBalance = function () {
         $http.post("http://topup.newphone-function.trade/api/balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
@@ -136,6 +139,23 @@ app.controller('topupController', function($scope,$http) {
                 $('#modal-topup-history').modal('show');
             });
 
+    }
+
+    $scope.getTodayReport = function () {
+        $http.get("/api/log/today/report")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.todayReport = response.data;
+
+                $http.get("/api/log/today/report-total")
+                    .then(function(response) {
+                        //alert(response.data.AMOUNT);
+                        $scope.todayReportTotal = response.data;
+
+
+                        $('#modal-topup-report').modal('show');
+                    });
+            });
     }
 
     $scope.showStatusSuccess = function (msg) {
