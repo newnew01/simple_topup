@@ -382,7 +382,7 @@
                 <td><% data.network %></td>
                 <td><% data.number %></td>
                 <td><% data.cash %></td>
-                <td><span class="label label-warning" ng-if="data.status == 0">กำลังดำเนินการ</span><span class="label label-success" ng-if="data.status == 1">สำเร็จ</span><span class="label label-danger" ng-if="data.status == 2">ไม่สำเร็จ</span></td>
+                <td><span class="label label-warning" ng-if="data.status == 0">กำลังดำเนินการ</span><span class="label label-success" ng-if="data.status == 1">สำเร็จ</span><span class="label label-danger" ng-if="data.status == 2">ไม่สำเร็จ</span><span class="label" style="background-color:#828282" ng-if="data.status == 3">ยกเลิก</span></td>
               </tr>
               </tbody>
             </table>
