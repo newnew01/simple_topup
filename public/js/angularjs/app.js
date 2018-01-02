@@ -7,6 +7,7 @@ var app = angular.module('topupApp', ['ngSanitize'], function($interpolateProvid
 
 app.controller('topupController', function($scope,$http) {
 
+    $scope.url = 'http://topup.sk-function.info/api/';
     $scope.username = 'bmV3bmV3MDE=';
     $scope.password = 'bmV3a2h1bmcwMQ=='
     $scope.users = branch_name;
@@ -23,7 +24,7 @@ app.controller('topupController', function($scope,$http) {
 
 
     $scope.reloadBalance = function () {
-        $http.post("http://topup.newphone-function.trade/api/balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
+        $http.post($scope.url + "balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
             .then(function(response) {
                 //alert(response.data.AMOUNT);
                 $scope.balance = response.data.AMOUNT;
@@ -57,7 +58,7 @@ app.controller('topupController', function($scope,$http) {
 
 
 
-        $http.post("http://topup.newphone-function.trade/api/topup_refill",data)
+        $http.post($scope.url + "topup_refill",data)
             .then(function(response) {
                 //alert(response.data.AMOUNT);
                 $('#modal-topup-status').modal('show');
@@ -86,7 +87,7 @@ app.controller('topupController', function($scope,$http) {
             'password':Encryption.decode($scope.password),
             'orderid':$scope.orderid
         };
-        $http.post("http://topup.newphone-function.trade/api/topup_status",data)
+        $http.post($scope.url + "topup_status",data)
             .then(function(response) {
                 if(response.data.STATUS == 1){
                     if(response.data.STATUS_REFILL == 1){
