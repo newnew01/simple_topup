@@ -21,6 +21,10 @@ app.controller('topupController', function($scope,$http) {
 
     $scope.todayReport = [];
     $scope.todayReportTotal = [];
+    $scope.monthlyReport = [];
+    $scope.monthlyReportTotal = [];
+    $scope.entireReport = [];
+    $scope.entireReportTotal = [];
 
 
     $scope.reloadBalance = function () {
@@ -157,6 +161,32 @@ app.controller('topupController', function($scope,$http) {
                         $('#modal-topup-report').modal('show');
                     });
             });
+    }
+
+    $scope.getAllReport = function () {
+        $http.get("/api/log/monthly/report")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.monthlyReport = response.data;
+            });
+        $http.get("/api/log/monthly/report-total")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.monthlyReportTotal = response.data;
+            });
+        $http.get("/api/log/entire/report")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.entireReport = response.data;
+            });
+        $http.get("/api/log/entire/report-total")
+            .then(function(response) {
+                //alert(response.data.AMOUNT);
+                $scope.entireReportTotal = response.data;
+            });
+
+
+        $('#modal-topup-report-all').modal('show');
     }
 
     $scope.showStatusSuccess = function (msg) {
