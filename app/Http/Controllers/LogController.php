@@ -82,9 +82,9 @@ class LogController extends Controller
 
     public function getMonthlyReportTotal()
     {
-        $now = Carbon::now();
-        $monthStart = $now->startOfMonth();
-        $monthEnd = $now->endOfMonth();
+        //$now = Carbon::now();
+        $monthStart = (new Carbon('now'))->startOfMonth();
+        $monthEnd = (new Carbon('now'))->endOfMonth();
 
         $report_totals = TopupLog::whereBetween('created_at', [$monthStart , $monthEnd])->where('status','=','1')->groupBy('branch_name')->
         selectRaw('sum(cash) as sum, branch_name')->get();
