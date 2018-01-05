@@ -29,6 +29,10 @@ Route::get('/log/today/','LogController@getTodayLog');
 Route::get('/log/today/report','LogController@getTodayReport');
 Route::get('/log/today/report-total','LogController@getTodayReportTotal');
 
+Route::get('/log/monthly/report-total','LogController@getMonthlyReportTotal');
+
+Route::get('/log/entire/report-total','LogController@getEntireReportTotal');
+
 
 
 
