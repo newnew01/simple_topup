@@ -504,7 +504,7 @@
               <table class="table table-hover">
                 <tbody>
                 <tr>
-                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดเติมเงินเดือนนี้ (แยกเตามเครือข่าย)</th>
+                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดเติมเงินเดือนนี้ (แยกตามเครือข่าย)</th>
                 </tr>
                 <tr>
                   <th>สาขา</th>
@@ -532,7 +532,7 @@
               <table class="table table-hover">
                 <tbody>
                 <tr>
-                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดเตั้งแต่เริ่มต้น</th>
+                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดตั้งแต่เริ่มต้น</th>
                 </tr>
                 <tr>
                   <th>สาขา</th>
@@ -552,7 +552,7 @@
               <table class="table table-hover">
                 <tbody>
                 <tr>
-                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดเตั้งแต่เริ่มต้น (แยกเตามเครือข่าย)</th>
+                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดตั้งแต่เริ่มต้น (แยกตามเครือข่าย)</th>
                 </tr>
                 <tr>
                   <th>สาขา</th>
