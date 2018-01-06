@@ -40,7 +40,7 @@ class NotifyTodayReport extends Command
      */
     public function handle()
     {
-        $token = 'KJXYawTDuUVFGkrIGwGKma8E6KfkgEx0riyAA3spGm3';
+        $token = 'xZXfSUuL8tHqqcdWIMTh9ZwuOr09JxByYuQvXCmDbPx';
         $datetime = Carbon::now()->format('d/m/Y H:i:s');
 
         $message = "\n";
