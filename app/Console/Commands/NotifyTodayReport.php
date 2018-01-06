@@ -1,15 +1,44 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Console\Commands;
 
 use App\TopupLog;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Console\Command;
 
-class LineController extends Controller
+class NotifyTodayReport extends Command
 {
-    public function notifyReportToday()
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'notify:today-report';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Send notification to LINE';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
     {
         $token = 'KJXYawTDuUVFGkrIGwGKma8E6KfkgEx0riyAA3spGm3';
         $datetime = Carbon::now()->format('d/m/Y H:i:s');
@@ -42,6 +71,22 @@ class LineController extends Controller
         $this->notify($token,$message);
     }
 
+    public function notify($token, $message)
+    {
+        $headers = [
+            'Authorization' => 'Bearer ' . $token
+        ];
+
+        $client = new Client();
+        $response = $client->request('POST', 'https://notify-api.line.me/api/notify', [
+            'form_params' => [
+                'message' => $message
+            ],
+            'headers' => $headers
+        ]);
+
+        return $response;
+    }
 
     public function getTodayReport()
     {
@@ -61,23 +106,5 @@ class LineController extends Controller
         selectRaw('sum(cash) as sum, branch_name')->get();
 
         return $report_totals;
-    }
-
-
-    public function notify($token, $message)
-    {
-        $headers = [
-            'Authorization' => 'Bearer ' . $token
-        ];
-
-        $client = new Client();
-        $response = $client->request('POST', 'https://notify-api.line.me/api/notify', [
-            'form_params' => [
-                'message' => $message
-            ],
-            'headers' => $headers
-        ]);
-
-        return $response;
     }
 }

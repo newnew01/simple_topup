@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\TopupLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class LogController extends Controller
 {
