@@ -70,6 +70,7 @@
           <ul class="nav navbar-nav">
             <li><a href="#" ng-click="showTopupHistory()"><i class="fa fa-fw fa-history"></i> ประวัติการเติมเงิน (รายวัน)</a></li>
             <li><a href="#" ng-click="getTodayReport()"><i class="fa fa-fw fa-list"></i> สรุปเติมเงิน (รายวัน)</a></li>
+            <li><a href="#" ng-click="getAllReport()"><i class="fa fa-fw fa-bar-chart-o"></i> สรุปยอดทั้งหมด</a></li>
           </ul>
         </div>
 
@@ -467,6 +468,122 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+
+  <div class="modal fade" id="modal-topup-report-all">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-list"></i> สรุปเติมเงิน</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดเติมเงินเดือนนี้</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>ยอดรวม</th>
+                </tr>
+                <tr ng-if="monthlyReportTotal.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in monthlyReportTotal">
+                  <td><% data.branch_name %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดเติมเงินเดือนนี้ (แยกตามเครือข่าย)</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>เครือข่าย</th>
+                  <th>ยอดเงิน</th>
+
+                </tr>
+                <tr ng-if="monthlyReport.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in monthlyReport">
+                  <td><% data.branch_name %></td>
+                  <td><% data.network %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="2" class="text-center" bgcolor="#d0d0d0">สรุปยอดตั้งแต่เริ่มต้น</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>ยอดรวม</th>
+                </tr>
+                <tr ng-if="entireReportTotal.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in entireReportTotal">
+                  <td><% data.branch_name %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th colspan="3" class="text-center" bgcolor="#d0d0d0">สรุปยอดตั้งแต่เริ่มต้น (แยกตามเครือข่าย)</th>
+                </tr>
+                <tr>
+                  <th>สาขา</th>
+                  <th>เครือข่าย</th>
+                  <th>ยอดเงิน</th>
+
+                </tr>
+                <tr ng-if="entireReport.length == 0">
+                  <td colspan="3" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-repeat="data in entireReport">
+                  <td><% data.branch_name %></td>
+                  <td><% data.network %></td>
+                  <td><% data.sum %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">ปิด</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 
 
   <footer class="main-footer">

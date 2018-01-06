@@ -79,4 +79,44 @@ class LogController extends Controller
 
         return $report_totals;
     }
+
+    public function getMonthlyReport()
+    {
+        $monthStart = (new Carbon('now'))->startOfMonth();
+        $monthEnd = (new Carbon('now'))->endOfMonth();
+        $reports = TopupLog::whereBetween('created_at', [$monthStart , $monthEnd])->where('status','=','1')->groupBy('branch_name','network')->
+        selectRaw('sum(cash) as sum, branch_name,network')->get();
+
+        return $reports;
+    }
+
+    public function getMonthlyReportTotal()
+    {
+        //$now = Carbon::now();
+        $monthStart = (new Carbon('now'))->startOfMonth();
+        $monthEnd = (new Carbon('now'))->endOfMonth();
+
+        $report_totals = TopupLog::whereBetween('created_at', [$monthStart , $monthEnd])->where('status','=','1')->groupBy('branch_name')->
+        selectRaw('sum(cash) as sum, branch_name')->get();
+
+        return $report_totals;
+    }
+
+
+    public function getEntireReportTotal()
+    {
+
+        $report_totals = TopupLog::where('status','=','1')->groupBy('branch_name')->
+        selectRaw('sum(cash) as sum, branch_name')->get();
+
+        return $report_totals;
+    }
+
+    public function getEntireReport()
+    {
+        $reports = TopupLog::where('status','=','1')->groupBy('branch_name','network')->
+        selectRaw('sum(cash) as sum, branch_name,network')->get();
+
+        return $reports;
+    }
 }
