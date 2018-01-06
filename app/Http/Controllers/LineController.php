@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 
 class LineController extends Controller
 {
+    /*
     public function notifyReportToday()
     {
         $token = 'KJXYawTDuUVFGkrIGwGKma8E6KfkgEx0riyAA3spGm3';
@@ -80,4 +81,5 @@ class LineController extends Controller
 
         return $response;
     }
+    */
 }

@@ -131,4 +131,4 @@ Route::post('/topup_refill', function (Request $request) {
 });
 
 
-Route::get('/line-notify/report-today','LineController@notifyReportToday');
+//Route::get('/line-notify/report-today','LineController@notifyReportToday');
