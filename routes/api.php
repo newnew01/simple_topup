@@ -123,3 +123,6 @@ Route::post('/topup_refill', function (Request $request) {
     $xml=new SimpleXMLElement($response->getBody()->getContents());
     echo json_encode($xml);
 });
+
+
+Route::get('/line-notify/report-today','LineController@notifyReportToday');
