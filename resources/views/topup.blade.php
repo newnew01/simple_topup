@@ -97,7 +97,7 @@
       <section class="content-header">
         <h1>
           ระบบเติมเงิน
-          <small>เวอร์ชั่น 1.0</small>
+          <small>เวอร์ชั่น 2.0</small>
         </h1>
         <ol class="breadcrumb">
           <li class="active">{{$user->branch_name}}</li>
@@ -107,6 +107,58 @@
       <!-- Main content -->
       <section class="content">
         <div class="row">
+          <div class="col-md-12">
+            <!-- Form Element sizes -->
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">เลือกเครือข่ายอัตโนมัติ</h3><small> (แค่ใส่เบอร์ก็รู้เครือข่าย)</small>
+              </div>
+              <div class="box-body">
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <center><img src="/logo/search_logo.jpg" width="200" height="80"></center>
+                  </div>
+                  <div class="col-md-5">
+                    <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="ais_number">
+                  </div>
+                  <div class="col-md-2">
+                    <select class="form-control" ng-model="ais_cash">
+                      <option value="">คลิกเลือกราคา</option>
+                      <option value="5">5 (ไม่มีส่วนลด,ยกเลิกไม่ได้)</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="40">40</option>
+                      <option value="50">50</option>
+                      <option value="60">60</option>
+                      <option value="70">70</option>
+                      <option value="80">80</option>
+                      <option value="90">90</option>
+                      <option value="100">100</option>
+                      <option value="150">150</option>
+                      <option value="200">200</option>
+                      <option value="300">300</option>
+                      <option value="350">350</option>
+                      <option value="400">400</option>
+                      <option value="500">500</option>
+                      <option value="800">800</option>
+                      <option value="1000">1000</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="topupRefill(1,ais_number,ais_cash,users)">เติมเงิน</button>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+
           <div class="col-md-6">
             <!-- Form Element sizes -->
             <div class="box box-success">
@@ -255,10 +307,10 @@
             <!-- Form Element sizes -->
             <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">I MOBILE 3G X</h3>
+                <h3 class="box-title">TOT3G</h3>
               </div>
               <div class="box-body">
-                <center><img src="/logo/imobile.jpg" width="200" height="80"></center>
+                <center><img src="/logo/tot3g_logo.jpg" width="200" height="80"></center>
                 <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
                 <br>
                 <select class="form-control" ng-model="imobile_cash">
@@ -316,6 +368,88 @@
                 </select>
                 <br>
                 <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(7,pengoin_number,pengoin_cash,users)">เติมเงิน</button>
+              </div>
+
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">168</h3>
+              </div>
+              <div class="box-body">
+                <center><img src="/logo/168_logo.jpg" width="200" height="80"></center>
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
+                <br>
+                <select class="form-control" ng-model="imobile_cash">
+                  <option value="">คลิกเลือกราคา</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                  <option value="60">60</option>
+                  <option value="70">70</option>
+                  <option value="80">80</option>
+                  <option value="90">90</option>
+                  <option value="100">100</option>
+                  <option value="150">150</option>
+                  <option value="200">200</option>
+                  <option value="250">250</option>
+                  <option value="300">300</option>
+                  <option value="350">350</option>
+                  <option value="400">400</option>
+                  <option value="450">450</option>
+                  <option value="500">500</option>
+                  <option value="800">800</option>
+                  <option value="1000">1000</option>
+                </select>
+                <br>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(4,imobile_number,imobile_cash,users)">เติมเงิน</button>
+              </div>
+
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">Buzzme</h3>
+              </div>
+              <div class="box-body">
+                <center><img src="/logo/buzzme_logo.jpg" width="200" height="80"></center>
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
+                <br>
+                <select class="form-control" ng-model="imobile_cash">
+                  <option value="">คลิกเลือกราคา</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                  <option value="60">60</option>
+                  <option value="70">70</option>
+                  <option value="80">80</option>
+                  <option value="90">90</option>
+                  <option value="100">100</option>
+                  <option value="150">150</option>
+                  <option value="200">200</option>
+                  <option value="250">250</option>
+                  <option value="300">300</option>
+                  <option value="350">350</option>
+                  <option value="400">400</option>
+                  <option value="450">450</option>
+                  <option value="500">500</option>
+                  <option value="800">800</option>
+                  <option value="1000">1000</option>
+                </select>
+                <br>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(4,imobile_number,imobile_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -586,10 +720,10 @@
   </div>
 
 
-  <footer class="main-footer">
+  <footer class="main-footer">เด็ก
     <div class="container">
       <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0
+        <b>Version</b> 2.0
       </div>
       <strong>Copyright &copy; 2017 <a href="#">NEW PHONE</a>.</strong> All rights
       reserved.

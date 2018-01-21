@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -128,6 +129,36 @@ Route::post('/topup_refill', function (Request $request) {
     ]);
     $xml=new SimpleXMLElement($response->getBody()->getContents());
     echo json_encode($xml);
+});
+
+
+
+
+Route::get('/wepay/balance', function () {
+
+    $username = env("WEPAY_USERNAME");
+    $password = env("WEPAY_PASSWORD");
+
+    $client = new GuzzleHttp\Client();
+    try {
+        $response = $client->request('POST', 'https://www.wepay.in.th/client_api.json.php', [
+            'form_params' => [
+                'username' => $username,
+                'password' => $password,
+                'type' => 'balance_inquiry',
+            ]
+        ]);
+
+        return $response;
+
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+        $data = json_decode($e->getResponse()->getBody(true));
+        return Response::json($data);
+        //return json_decode($e->getResponse()->getBody(true));
+    }
+
+
+
 });
 
 
