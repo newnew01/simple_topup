@@ -104,10 +104,14 @@ class WepayController extends Controller
         $username = env("WEPAY_USERNAME");
         $password = env("WEPAY_PASSWORD");
         $resp_url = 'http://topup.newphone-function.trade/api/wepay/callback/refund';
-        $dest_ref = 'RMTOPUP';
         $pay_to_company = $request->input('network_code');
         $transaction_id = $request->input('transaction_id');
 
+        $topup_log = TopupLog::where('orderid','=',$transaction_id);
+        if($topup_log->exists()){
+            $topup_log = $topup_log->first();
+            $dest_ref = 'RMTOPUP'.sprintf("%06d",$topup_log->id);
+        }
 
         $client = new Client();
         try {
@@ -126,12 +130,9 @@ class WepayController extends Controller
             $a_data = explode("|", $data);
 
             if($a_data[0] == 'SUCCEED'){
-                $topup_log = TopupLog::where('orderid','=',$transaction_id);
-                if($topup_log->exists()){
-                    $topup_log = $topup_log->first();
-                    $topup_log->status = 5;
-                    $topup_log->save();
-                }
+                $topup_log->status = 5;
+                $topup_log->save();
+
             }
             return $data;
 
