@@ -26,6 +26,7 @@ class CreateTopupLogsTable extends Migration
             $table->string('sms')->nullable();
             $table->string('operator_trxnsid')->nullable();
             $table->float('drawn_amount')->nullable();
+            $table->string('dest_ref')->nullable();
         });
     }
 

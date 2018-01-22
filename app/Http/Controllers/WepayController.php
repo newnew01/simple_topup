@@ -42,13 +42,26 @@ class WepayController extends Controller
         $password = env("WEPAY_PASSWORD");
         $type = 'mtopup';
         $resp_url = 'http://topup.newphone-function.trade/api/wepay/callback/topup';
-        $dest_ref = 'MTOPUP';
+
         $pay_to_ref1 = $request->input('number');;
         $pay_to_amount = $request->input('cash');
         $pay_to_company = $request->input('network_code');
 
         $users = $request->input('users');
         $network = $request->input('network');
+
+        $topup_log = new TopupLog();
+        $topup_log->orderid = '000000000';
+        $topup_log->branch_name = $users;
+        $topup_log->network = $network;
+        $topup_log->network_code = $pay_to_company;
+        $topup_log->number = $pay_to_ref1;
+        $topup_log->cash = $pay_to_amount;
+        $topup_log->status = 1;
+
+        $topup_log->save();
+
+        $dest_ref = 'MTOPUP'.sprintf("%06d",$topup_log->id);
 
 
         $client = new Client();
@@ -69,16 +82,12 @@ class WepayController extends Controller
             $data = $response;
 
             if($data->code == '00000'){
-                $topup_log = new TopupLog();
                 $topup_log->orderid = $data->transaction_id;
-                $topup_log->branch_name = $users;
-                $topup_log->network = $network;
-                $topup_log->network_code = $pay_to_company;
-                $topup_log->number = $pay_to_ref1;
-                $topup_log->cash = $pay_to_amount;
-                $topup_log->status = 1;
-
+                $topup_log->dest_ref = $dest_ref;
                 $topup_log->save();
+
+            }else{
+                $topup_log->delete();
             }
             return $data;
 
