@@ -161,5 +161,40 @@ Route::get('/wepay/balance', function () {
 
 });
 
+/***************************************/
+
+Route::get('/wepay/balance', 'WepayController@getBalance');
+
+Route::get('/wepay/topup', 'WepayController@topup');
+
+Route::get('/wepay/callback/topup', 'WepayController@callbackTopup');
+
+Route::get('/wepay/callback/refund',  'WepayController@callbackRefund');
+
+Route::get('/wepay/test', function () {
+    $username = env("WEPAY_USERNAME");
+    $password = env("WEPAY_PASSWORD");
+
+    $client = new GuzzleHttp\Client();
+    try {
+        $response = $client->request('POST', 'https://www.wepay.in.th/client_api.json.php', [
+            'form_params' => [
+                'username' => $username,
+                'password' => $password,
+                'type' => 'balance_inquiry',
+            ]
+        ]);
+
+        return $response;
+
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+        $data = json_decode($e->getResponse()->getBody(true));
+        return Response::json($data);
+        //return json_decode($e->getResponse()->getBody(true));
+    }
+});
+
+//username=test&password=test&resp_url=https://www.mywebsite.com/wepay_result.php&dest_ref=MTOP
+//UP12345&pay_to_amount=10&pay_to_company=12CALL&type=mtopup&pay_to_ref1=0812345678
 
 //Route::get('/line-notify/report-today','LineController@notifyReportToday');

@@ -21,7 +21,10 @@ class CreateTopupLogsTable extends Migration
             $table->string('network');
             $table->string('number');
             $table->integer('cash');
-            $table->string('status');
+            $table->integer('status');
+            $table->string('sms');
+            $table->string('operator_trxnsid');
+            $table->float('drawn_amount');
         });
     }
 
