@@ -26,7 +26,7 @@ class WepayController extends Controller
             ]);
 
             //return json_decode($response->getBody());
-            return $response->getBody();
+            return $response->getBody()->code;
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             //$data = json_decode($e->getResponse()->getBody(true));
