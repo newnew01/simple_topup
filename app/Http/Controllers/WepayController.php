@@ -79,7 +79,7 @@ class WepayController extends Controller
                 ]
             ]);
 
-            $data = $response;
+            $data = json_decode($response->getBody());
 
             if($data->code == '00000'){
                 $topup_log->orderid = $data->transaction_id;
