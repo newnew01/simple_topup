@@ -24,8 +24,9 @@ class WepayController extends Controller
                     'type' => 'balance_inquiry',
                 ]
             ]);
+            //$data = json_decode($response->getBody());
 
-            return json_decode($response->getBody());
+            return $response;
             //return $response->getBody()->code;
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
