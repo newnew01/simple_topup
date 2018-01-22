@@ -163,13 +163,15 @@ Route::get('/wepay/balance', function () {
 
 /***************************************/
 
-Route::get('/wepay/balance', 'WepayController@getBalance');
+Route::post('/wepay/balance', 'WepayController@getBalance');
 
-Route::get('/wepay/topup', 'WepayController@topup');
+Route::post('/wepay/refund', 'WepayController@refund');
 
-Route::get('/wepay/callback/topup', 'WepayController@callbackTopup');
+Route::post('/wepay/topup', 'WepayController@topup');
 
-Route::get('/wepay/callback/refund',  'WepayController@callbackRefund');
+Route::post('/wepay/callback/topup', 'WepayController@callbackTopup');
+
+Route::post('/wepay/callback/refund',  'WepayController@callbackRefund');
 
 Route::get('/wepay/test', function () {
     $username = env("WEPAY_USERNAME");

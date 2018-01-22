@@ -19,12 +19,13 @@ class CreateTopupLogsTable extends Migration
             $table->string('orderid');
             $table->string('branch_name');
             $table->string('network');
+            $table->string('network_code');
             $table->string('number');
             $table->integer('cash');
-            $table->integer('status');
-            $table->string('sms');
-            $table->string('operator_trxnsid');
-            $table->float('drawn_amount');
+            $table->integer('status')->default(1);
+            $table->string('sms')->nullable();
+            $table->string('operator_trxnsid')->nullable();
+            $table->float('drawn_amount')->nullable();
         });
     }
 
