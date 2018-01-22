@@ -24,10 +24,8 @@ class WepayController extends Controller
                     'type' => 'balance_inquiry',
                 ]
             ]);
-            //$data = json_decode($response->getBody());
 
             return $response;
-            //return $response->getBody()->code;
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             //$data = json_decode($e->getResponse()->getBody(true));
@@ -68,7 +66,7 @@ class WepayController extends Controller
                 ]
             ]);
 
-            $data = json_decode($response->getBody());
+            $data = $response;
 
             if($data->code == '00000'){
                 $topup_log = new TopupLog();
@@ -130,7 +128,7 @@ class WepayController extends Controller
 
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            $data = json_decode($e->getResponse()->getBody(true));
+            $data = $e->getResponse()->getBody(true);
             return $data;
             //return json_decode($e->getResponse()->getBody(true));
         }
