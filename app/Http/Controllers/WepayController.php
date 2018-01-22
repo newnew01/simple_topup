@@ -25,7 +25,7 @@ class WepayController extends Controller
                 ]
             ]);
 
-            echo json_decode($response->getBody())->code;
+            return $response;
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             //$data = json_decode($e->getResponse()->getBody(true));
@@ -89,7 +89,7 @@ class WepayController extends Controller
             }else{
                 $topup_log->delete();
             }
-            return $data;
+            return $response;
 
 
         } catch (\GuzzleHttp\Exception\RequestException $e) {
