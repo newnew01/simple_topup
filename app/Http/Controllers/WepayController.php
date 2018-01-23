@@ -186,5 +186,15 @@ class WepayController extends Controller
         }
     }
 
+    public function getOperator(Request $request)
+    {
+        $number = $request->input('number');
+
+        $client = new Client();
+        $response = $client->request('GET', 'https://www.wepay.in.th/Inquiry/mobile_operator.php?ref1='.$number);
+
+        return $response;
+    }
+
 
 }

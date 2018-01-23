@@ -173,6 +173,8 @@ Route::post('/wepay/callback/topup', 'WepayController@callbackTopup');
 
 Route::post('/wepay/callback/refund',  'WepayController@callbackRefund');
 
+Route::post('/wepay/get-operator', 'WepayController@getOperator');
+
 Route::get('/wepay/test', function () {
     $username = env("WEPAY_USERNAME");
     $password = env("WEPAY_PASSWORD");
@@ -195,6 +197,7 @@ Route::get('/wepay/test', function () {
         //return json_decode($e->getResponse()->getBody(true));
     }
 });
+
 
 //username=test&password=test&resp_url=https://www.mywebsite.com/wepay_result.php&dest_ref=MTOP
 //UP12345&pay_to_amount=10&pay_to_company=12CALL&type=mtopup&pay_to_ref1=0812345678

@@ -7,7 +7,7 @@ var app = angular.module('topupApp', ['ngSanitize'], function($interpolateProvid
 
 app.controller('topupController', function($scope,$http) {
 
-    $scope.url = 'http://topup.sk-function.info/api/';
+    $scope.url = 'http://simple-topup.test/api/';
     $scope.username = 'bmV3bmV3MDE=';
     $scope.password = 'bmV3a2h1bmcwMQ=='
     $scope.users = branch_name;
@@ -26,6 +26,131 @@ app.controller('topupController', function($scope,$http) {
     $scope.entireReport = [];
     $scope.entireReportTotal = [];
 
+    $scope.search_logo = '/logo/search_logo.jpg';
+    $scope.search_price = [];
+    $scope.autoOperator = '';
+    $scope.autoOperatorReady = true;
+
+    $scope.mtopup_price = [];
+    $scope.mtopup_price['12CALL'] = [10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,600,700,800,1000,1500];
+    $scope.mtopup_price['HAPPY'] = [10,20,30,40,50,60,100,200,300,500,800];
+    $scope.mtopup_price['TRMV'] = [10,20,30,40,50,60,70,80,90,100,150,200,250,300,350,400,450,500,600,700,800,900,1000];
+    $scope.mtopup_price['MY'] = [10,20,50,100,300,500];
+    $scope.mtopup_price['PENGUIN'] = [10,20,30,40,50,100,200,300,500];
+    $scope.mtopup_price['TOT'] = [20,50,100,200,300];
+    $scope.mtopup_price['168'] = [10,20,50,100,200,300,500];
+    $scope.mtopup_price['BUZZME'] = [50,100,200,300,500,1000,1200];
+
+    $scope.network_name = {'12CALL':'AIS', 'HAPPY':'DTAC', 'TRMV':'TRUE', 'MY':'MY', 'PENGUIN':'PENGUIN', 'TOT':'TOT3G', '168':'168', 'BUZZME':'BUZZME'};
+
+    $scope.m_12call_number = '';
+    $scope.m_happy_number = '';
+    $scope.m_trmv_number = '';
+    $scope.m_my_number = '';
+    $scope.m_penguin_number = '';
+    $scope.m_tot_number = '';
+    $scope.m_168_number = '';
+    $scope.m_buzzme_number = '';
+
+
+    $scope.getOperator = function () {
+        if($scope.number_search.length == 10){
+            var tmp_number = $scope.number_search;
+            //tmp_number = $scope.number_search;
+            $scope.search_logo = '/logo/loading.gif';
+            $http.post($scope.url +'wepay/get-operator',{'number':tmp_number})
+                .then(function(response) {
+                    operator = response.data;
+
+                    //alert(tmp_number+'/'+$scope.number_search+'\nnetwork:'+operator);
+                    //alert(operator)
+                    if(tmp_number == $scope.number_search){
+                        if(!operator || 0 === operator.length || operator == "error")
+                        {
+                            alert('ผิดพลาด! ไม่สามารถตรวจสอบได้ในขณะนี้หรือไม่สามารถระบุเครือข่ายได้');
+                            $scope.search_logo = '/logo/search_logo.jpg';
+                            $scope.search_price = [];
+                            $scope.autoOperatorReady = true;
+                            $scope.number_search = "";
+                            $scope.autoOperator = '';
+                        }
+                        else if(operator == "ais")
+                        {
+                            $scope.search_logo = '/logo/ais_logo.jpg';
+                            $scope.search_price = $scope.mtopup_price['12CALL'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = '12CALL';
+                        }
+                        else if(operator == "dtac")
+                        {
+                            $scope.search_logo = '/logo/dtac_logo.jpg';
+                            $scope.search_price = $scope.mtopup_price['HAPPY'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = 'HAPPY';
+                        }
+                        else if(operator == "truemove")
+                        {
+                            $scope.search_logo = '/logo/true_h_logo.jpg';
+                            $scope.search_price = $scope.mtopup_price['TRMV'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = 'TRMV';
+                        }
+
+                        else if(operator == "my")
+                        {
+                            $scope.search_logo = '/logo/my.jpg';
+                            $scope.search_price = $scope.mtopup_price['MY'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = 'MY';
+                        }
+                        else if(operator == "penguin")
+                        {
+                            $scope.search_logo = '/logo/penguinsim.jpg';
+                            $scope.search_price = $scope.mtopup_price['PENGUIN'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = 'PENGUIN';
+                        }
+                        else if(operator == "tot3g")
+                        {
+                            $scope.search_logo = '/logo/tot3g_logo.jpg';
+                            $scope.search_price = $scope.mtopup_price['TOT'];
+                            $scope.autoOperatorReady = false;
+                            $scope.autoOperator = 'TOT';
+                        }
+                        else if(operator == "unknown"){
+                            $scope.search_logo = '/logo/search_logo.jpg';
+                            $scope.search_price = [];
+                            $scope.autoOperatorReady = true;
+                            alert('ผิดพลาด! ไม่สามารถระบุเครือข่ายได้');
+                            $scope.number_search = "";
+                            $scope.autoOperator = '';
+                        }
+                    }
+
+
+
+                });
+        }else{
+            $scope.search_logo = '/logo/search_logo.jpg';
+            $scope.search_price = [];
+            $scope.autoOperatorReady = true;
+            $scope.autoOperator = '';
+        }
+    }
+
+    $scope.topupAutoOperator = function () {
+        //alert('number:'+$scope.number_search+'\ncash:'+$scope.auto_operator_cash+'\nnetwork:'+$scope.autoOperator);
+        $scope.topupRefill($scope.autoOperator,$scope.number_search,$scope.auto_operator_cash,$scope.users);
+    }
+
+    $scope.setOperator = function (number) {
+
+    }
+
+    $scope.test_click = function () {
+        alert();
+    }
+
 
     $scope.reloadBalance = function () {
         $http.post($scope.url + "balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
@@ -39,49 +164,35 @@ app.controller('topupController', function($scope,$http) {
         alert(123);
     }
 
-    $scope.topupRefill = function (network,number,cash,users) {
-        var data = {
-            'username':Encryption.decode($scope.username),
-            'password':Encryption.decode($scope.password),
-            'network':network,
-            'number':number,
-            'cash':cash,
-            'users':users
-        };
+    $scope.topupRefill = function (network_code,number,cash,users) {
+        network_name = $scope.network_name[network_code];
 
-        $scope.showStatusLoading();
-        //alert(network+'|'+number+'|'+cash+'|'+users);
-        $('#modal-topup-status').modal('show');
-       // alert();
-        //$scope.showStatusSuccess('ทำรายการสำเร็จ');
-       // alert();
-        //$scope.showStatusError('ผิดพลาด');
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-left",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "0",
+            "extendedTimeOut": "0",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 
-        //setInterval($scope.testfunc, 3000);
+        if(number.length == 10 && cash > 0){
+            toastr["info"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+"<br><img src='/image/loading2.gif' height='15px'> กำลังทำรายการ...")
+        }else{
+            alert("ผิดพลาด! เบอร์โทรหรือราคาไม่ถูกต้อง");
+        }
 
 
 
-
-        $http.post($scope.url + "topup_refill",data)
-            .then(function(response) {
-                //alert(response.data.AMOUNT);
-                $('#modal-topup-status').modal('show');
-                if(response.data.STATUS != 1){
-                    $scope.showStatusError(response.data.DETAIL);
-                }else{
-                    $scope.orderid = response.data.ORDERID;
-                    $scope.timerCheckStatus = setInterval($scope.checkTopupStatus, 5000);
-
-                    network_name = ['no_data','AIS','DTAC','TRUE',' I-MOBILE 3GX','MY by CAT','AIS เติมเงินไม่เพิ่มวัน','PENGOIN']
-                    $http.post("/api/log/new",{'orderid':$scope.orderid,'network':network_name[network],'branch_name':users,'number':number,'cash':cash})
-                        .then(function(response) {
-                            if(response.data == 'sucess')
-                                console.log('create log success');
-                            else
-                                console.log('create log failed');
-                    });
-                }
-            });
 
     }
 

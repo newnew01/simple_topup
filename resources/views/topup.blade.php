@@ -17,6 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+  <link href="/plugins/toastjs/toastr.min.css" rel="stylesheet"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,6 +30,8 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
 
   <script src="/js/angularjs/app.js"></script>
+
+
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -117,37 +120,19 @@
 
                 <div class="row">
                   <div class="col-md-3">
-                    <center><img src="/logo/search_logo.jpg" width="200" height="80"></center>
+                    <center><img ng-src="<% search_logo %>" src="/logo/search_logo.jpg" height="40"></center>
                   </div>
                   <div class="col-md-5">
-                    <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="ais_number">
+                    <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="number_search" ng-change="getOperator()">
                   </div>
                   <div class="col-md-2">
-                    <select class="form-control" ng-model="ais_cash">
+                    <select class="form-control" ng-model="auto_operator_cash" ng-disabled="autoOperatorReady">
                       <option value="">คลิกเลือกราคา</option>
-                      <option value="5">5 (ไม่มีส่วนลด,ยกเลิกไม่ได้)</option>
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                      <option value="30">30</option>
-                      <option value="40">40</option>
-                      <option value="50">50</option>
-                      <option value="60">60</option>
-                      <option value="70">70</option>
-                      <option value="80">80</option>
-                      <option value="90">90</option>
-                      <option value="100">100</option>
-                      <option value="150">150</option>
-                      <option value="200">200</option>
-                      <option value="300">300</option>
-                      <option value="350">350</option>
-                      <option value="400">400</option>
-                      <option value="500">500</option>
-                      <option value="800">800</option>
-                      <option value="1000">1000</option>
+                      <option value="<% price %>" ng-repeat="price in search_price"><% price %></option>
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-primary btn-block" ng-click="topupRefill(1,ais_number,ais_cash,users)">เติมเงิน</button>
+                    <button type="button" class="btn btn-primary btn-block" ng-click="topupAutoOperator()" ng-disabled="autoOperatorReady">เติมเงิน</button>
                   </div>
                 </div>
 
@@ -167,32 +152,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/ais_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="ais_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="m_12call_number">
                 <br>
-                <select class="form-control" ng-model="ais_cash">
+                <select class="form-control" ng-model="m_12call_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="5">5 (ไม่มีส่วนลด,ยกเลิกไม่ได้)</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="70">70</option>
-                  <option value="80">80</option>
-                  <option value="90">90</option>
-                  <option value="100">100</option>
-                  <option value="150">150</option>
-                  <option value="200">200</option>
-                  <option value="300">300</option>
-                  <option value="350">350</option>
-                  <option value="400">400</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
-                  <option value="1000">1000</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['12CALL']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(1,ais_number,ais_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('12CALL',m_12call_number,m_12call_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -208,24 +175,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/dtac_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="dtac_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="m_happy_number">
                 <br>
-                <select class="form-control" ng-model="dtac_cash">
+                <select class="form-control" ng-model="m_happy_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="100">100</option>
-                  <option value="200">200</option>
-                  <option value="300">300</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['HAPPY']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(2,dtac_number,dtac_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('HAPPY',m_happy_number,m_happy_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -241,33 +198,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/true_h_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="true_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="m_trmv_number">
                 <br>
-                <select class="form-control" ng-model="true_cash">
+                <select class="form-control" ng-model="m_trmv_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="70">70</option>
-                  <option value="80">80</option>
-                  <option value="90">90</option>
-                  <option value="100">100</option>
-                  <option value="150">150</option>
-                  <option value="200">200</option>
-                  <option value="250">250</option>
-                  <option value="300">300</option>
-                  <option value="350">350</option>
-                  <option value="400">400</option>
-                  <option value="450">450</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
-                  <option value="1000">1000</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['TRMV']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(3,true_number,true_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('TRMV',m_trmv_number,m_trmv_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -283,19 +221,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/my.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถยกเลิกได้)" ng-model="my_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถดึงเงินคืนได้)" ng-model="m_my_number">
                 <br>
-                <select class="form-control" ng-model="my_cash">
+                <select class="form-control" ng-model="m_my_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="300">300</option>
-                  <option value="500">500</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['MY']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(5,my_number,my_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('MY',m_my_number,m_my_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -311,32 +244,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/tot3g_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถดึงเงินคืนได้)" ng-model="m_tot_number">
                 <br>
-                <select class="form-control" ng-model="imobile_cash">
+                <select class="form-control" ng-model="m_tot_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="70">70</option>
-                  <option value="80">80</option>
-                  <option value="90">90</option>
-                  <option value="100">100</option>
-                  <option value="150">150</option>
-                  <option value="200">200</option>
-                  <option value="250">250</option>
-                  <option value="300">300</option>
-                  <option value="350">350</option>
-                  <option value="400">400</option>
-                  <option value="450">450</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
-                  <option value="1000">1000</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['TOT']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(4,imobile_number,imobile_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('TOT',m_tot_number,m_tot_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -352,22 +267,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/penguinsim.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร  (ไม่สามารถยกเลิกได้)" ng-model="pengoin_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถดึงเงินคืนได้)" ng-model="m_penguin_number">
                 <br>
-                <select class="form-control" ng-model="pengoin_cash">
+                <select class="form-control" ng-model="m_penguin_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="200">200</option>
-                  <option value="300">300</option>
-                  <option value="500">500</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['PENGUIN']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(7,pengoin_number,pengoin_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('PENGUIN',m_penguin_number,m_penguin_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -383,32 +290,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/168_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถดึงเงินคืนได้)" ng-model="m_168_number">
                 <br>
-                <select class="form-control" ng-model="imobile_cash">
+                <select class="form-control" ng-model="m_168_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="70">70</option>
-                  <option value="80">80</option>
-                  <option value="90">90</option>
-                  <option value="100">100</option>
-                  <option value="150">150</option>
-                  <option value="200">200</option>
-                  <option value="250">250</option>
-                  <option value="300">300</option>
-                  <option value="350">350</option>
-                  <option value="400">400</option>
-                  <option value="450">450</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
-                  <option value="1000">1000</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['168']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(4,imobile_number,imobile_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('168',m_168_number,m_168_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -424,32 +313,14 @@
               </div>
               <div class="box-body">
                 <center><img src="/logo/buzzme_logo.jpg" width="200" height="80"></center>
-                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร" ng-model="imobile_number">
+                <input class="form-control input-lg" type="text" placeholder="เบอร์โทร (ไม่สามารถดึงเงินคืนได้)" ng-model="m_buzzme_number">
                 <br>
-                <select class="form-control" ng-model="imobile_cash">
+                <select class="form-control" ng-model="m_buzzme_cash">
                   <option value="">คลิกเลือกราคา</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                  <option value="60">60</option>
-                  <option value="70">70</option>
-                  <option value="80">80</option>
-                  <option value="90">90</option>
-                  <option value="100">100</option>
-                  <option value="150">150</option>
-                  <option value="200">200</option>
-                  <option value="250">250</option>
-                  <option value="300">300</option>
-                  <option value="350">350</option>
-                  <option value="400">400</option>
-                  <option value="450">450</option>
-                  <option value="500">500</option>
-                  <option value="800">800</option>
-                  <option value="1000">1000</option>
+                  <option value="<% price %>" ng-repeat="price in mtopup_price['BUZZME']"><% price %></option>
                 </select>
                 <br>
-                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill(4,imobile_number,imobile_cash,users)">เติมเงิน</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="topupRefill('BUZZME',m_buzzme_number,m_buzzme_cash,users)">เติมเงิน</button>
               </div>
 
               <!-- /.box-body -->
@@ -745,6 +616,8 @@
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
+
+<script src="/plugins/toastjs/toastr.min.js"></script>
 
 <script>
 
