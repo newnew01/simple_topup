@@ -7,7 +7,7 @@ var app = angular.module('topupApp', ['ngSanitize'], function($interpolateProvid
 
 app.controller('topupController', function($scope,$http) {
 
-    $scope.url = 'http://simple-topup.test/api/';
+    $scope.url = 'http://topup.newphone-function.trade/api/';
     $scope.username = 'bmV3bmV3MDE=';
     $scope.password = 'bmV3a2h1bmcwMQ=='
     $scope.users = branch_name;
