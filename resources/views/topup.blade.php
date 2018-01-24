@@ -392,11 +392,11 @@
                 <td><% data.cash %></td>
                 <td><% data.drawn_amount %></td>
                 <td>
-                  <span class="label label-warning show_tooltip" ng-if="data.status == 1" data-toggle="tooltip" title="<% data.sms %>"><% status_name[data.status] %></span>
-                  <span class="label label-success show_tooltip" ng-if="data.status == 2" data-toggle="tooltip" title="<% data.sms %>"><% status_name[data.status] %></span>
-                  <span class="label label-danger show_tooltip" ng-if="data.status == 4" data-toggle="tooltip" title="<% data.sms %>"><% status_name[data.status] %></span>
-                  <span class="label label-warning show_tooltip" ng-if="data.status == 5" data-toggle="tooltip" title="<% data.sms %>"><% status_name[data.status] %></span>
-                  <span class="label" style="background-color:#828282" ng-if="data.status == 6" data-toggle="tooltip" title="<% data.sms %>"><% status_name[data.status] %></span></td>
+                  <span class="label label-warning show_tooltip" ng-if="data.status == 1" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
+                  <span class="label label-success show_tooltip" ng-if="data.status == 2" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
+                  <span class="label label-danger show_tooltip" ng-if="data.status == 4" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
+                  <span class="label label-warning show_tooltip" ng-if="data.status == 5" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
+                  <span class="label" style="background-color:#828282" ng-if="data.status == 6" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span></td>
               </tr>
               </tbody>
             </table>
