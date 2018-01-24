@@ -390,7 +390,7 @@
                 <td><% data.network %></td>
                 <td><% data.number %></td>
                 <td><% data.cash %></td>
-                <td><% data.drawn_amount %></td>
+                <td><% data.drawn_amount %><button class='btn btn-xs btn-default' ng-if="data.drawn_amount == null && data.status == 2">ดึงคืน</button></td>
                 <td>
                   <span class="label label-warning show_tooltip" ng-if="data.status == 1" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
                   <span class="label label-success show_tooltip" ng-if="data.status == 2" data-toggle="tooltip" title="<% data.sms == 'null' ? '':data.sms %>"><% status_name[data.status] %></span>
