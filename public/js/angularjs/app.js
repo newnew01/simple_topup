@@ -176,10 +176,11 @@ app.controller('topupController', function($scope,$http) {
 
 
     $scope.reloadBalance = function () {
-        $http.post($scope.url + "balance",{'username':Encryption.decode($scope.username),'password':Encryption.decode($scope.password)})
+        $http.post($scope.url + "wepay/balance")
             .then(function(response) {
                 //alert(response.data.AMOUNT);
-                $scope.balance = response.data.AMOUNT;
+                if(response.data.code == '00000')
+                    $scope.balance = response.data.available_balance;
             });
     }
 
