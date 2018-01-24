@@ -377,6 +377,7 @@
                 <th>เครือข่าย</th>
                 <th>หมายเลข</th>
                 <th>ยอดเงิน</th>
+                <th>ยอดดึงคืน</th>
                 <th>สถานะ</th>
               </tr>
               <tr ng-if="topup_histories.length == 0">
@@ -389,6 +390,7 @@
                 <td><% data.network %></td>
                 <td><% data.number %></td>
                 <td><% data.cash %></td>
+                <td><% data.drawn_amount %></td>
                 <td>
                   <span class="label label-warning" ng-if="data.status == 1"><% status_name[data.status] %></span>
                   <span class="label label-success" ng-if="data.status == 2"><% status_name[data.status] %></span>
