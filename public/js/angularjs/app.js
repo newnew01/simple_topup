@@ -234,6 +234,8 @@ app.controller('topupController', function($scope,$http) {
                     }, 3000 );
 
                     $scope.processQueue[transaction_id] = {'toast_obj':toast_obj,'interval_obj':interval_obj};
+                }else {
+                    toastr["error"]('code: '+response.data.code+'<br>เหตุผล: '+response.data.desc,"ผิดพลาด",$scope.toastOption);
                 }
             });
 
