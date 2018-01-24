@@ -325,64 +325,18 @@ app.controller('topupController', function($scope,$http) {
 
     }
 
-    $scope.checkTopupStatus = function () {
-        var data = {
-            'username':Encryption.decode($scope.username),
-            'password':Encryption.decode($scope.password),
-            'orderid':$scope.orderid,
-            'api_token':$scope.api_token
-        };
-        $http.post($scope.url + "topup_status",data)
-            .then(function(response) {
-                if(response.data.STATUS == 1){
-                    if(response.data.STATUS_REFILL == 1){
-                        $http.post("/api/log/update",{'orderid':$scope.orderid,'status':1,'api_token':$scope.api_token})
-                            .then(function(response) {
-                                if(response.data == 'sucess')
-                                    console.log('update log success [1]');
-                                else
-                                    console.log('update log failed');
-                            });
-                        $scope.showStatusSuccess('การทำรายการสำเร็จ');
-                        clearInterval($scope.timerCheckStatus);
-                        $scope.clearData();
-                        $scope.orderid = '';
-                        $scope.reloadBalance();
 
-                    }
-
-                    if(response.data.STATUS_CANCEL == 1){
-                        $http.post("/api/log/update",{'orderid':$scope.orderid,'status':2,'api_token':$scope.api_token})
-                            .then(function(response) {
-                                if(response.data == 'sucess')
-                                    console.log('update log success [2]');
-                                else
-                                    console.log('update log failed');
-                            });
-                        $scope.showStatusError('ผิดพลาด: กรุณาตรวจสอบเครือข่ายมือถือของท่าน')
-                        clearInterval($scope.timerCheckStatus);
-                        $scope.clearData();
-                        $scope.orderid = '';
-                        $scope.reloadBalance();
-
-                    }
-                }else {
-                    $scope.showStatusError(response.data.DETAIL)
-                    clearInterval($scope.timerCheckStatus);
-                    $scope.clearData();
-                    $scope.orderid = '';
-                    $scope.reloadBalance();
-                }
-
-            });
-    }
 
     $scope.showTopupHistory = function () {
         $http.post("/api/log/today",{'api_token':$scope.api_token})
             .then(function(response) {
                 //alert(response.data.AMOUNT);
+
                 $scope.topup_histories = response.data;
                 $('#modal-topup-history').modal('show');
+                setTimeout(function () {
+                    $('.show_tooltip').tooltip();
+                },500)
             });
 
     }
