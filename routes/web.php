@@ -14,8 +14,9 @@
 
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/topup/{token}', function ($token) {
+Route::get('/login/{token}', function ($token) {
     $shiftHour = 0;
     $token_data = base64_decode($token);
     if(substr( $token_data, 0, 4 ) === "aBcD"){
@@ -29,7 +30,10 @@ Route::get('/topup/{token}', function ($token) {
             $user = User::where('name','=',$splitData[1]);
             if($user->exists()){
                 $user = $user->first();
-                return view('topup')->with(compact('user'));
+                $user->api_token = str_random(60);
+                $user->save();
+                Auth::login($user);
+                return redirect('/');
             }else{
                 echo 'ACCESS DENIED : UNAUTHORIZED';
             }
@@ -50,12 +54,11 @@ Route::get('/topup/{token}', function ($token) {
     //return view('topup');
 });
 
-Route::get('/test_topup', function () {
-    if(env("TEST_MODE") == "true"){
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
         $user = User::find(1);
         return view('topup')->with(compact('user'));
-    }else{
-        return 'HI';
-    }
 
+    });
 });
+
