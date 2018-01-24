@@ -288,11 +288,13 @@ app.controller('topupController', function($scope,$http) {
                                 toastr.clear($scope.processQueue[transaction_id].toast_obj);
                                 clearInterval($scope.processQueue[transaction_id].interval_obj);
                                 toastr["success"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"สำเร็จ",$scope.toastOption);
+                                $scope.reloadBalance();
                             }else if(response2.data.status == '4'){
                                 //error network not match the number, refund
                                 toastr.clear($scope.processQueue[transaction_id].toast_obj);
                                 clearInterval($scope.processQueue[transaction_id].interval_obj);
                                 toastr["error"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+'<br>เหตุผล: '+response2.data.sms,"ไม่สำเร็จ",$scope.toastOption);
+                                $scope.reloadBalance();
                             }else if(response2.data.status == '1'){
                                 //processing, nothing to do
                             }else{
@@ -300,6 +302,7 @@ app.controller('topupController', function($scope,$http) {
                                 toastr.clear($scope.processQueue[transaction_id].toast_obj);
                                 clearInterval($scope.processQueue[transaction_id].interval_obj);
                                 toastr["error"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+'<br>เหตุผล: UNKNOW  ERROR',"ไม่สำเร็จ",$scope.toastOption);
+                                $scope.reloadBalance();
                             }
                         });
 
