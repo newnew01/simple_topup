@@ -42,6 +42,7 @@ app.controller('topupController', function($scope,$http) {
     $scope.mtopup_price['BUZZME'] = [50,100,200,300,500,1000,1200];
 
     $scope.network_name = {'12CALL':'AIS', 'HAPPY':'DTAC', 'TRMV':'TRUE', 'MY':'MY', 'PENGUIN':'PENGUIN', 'TOT':'TOT3G', '168':'168', 'BUZZME':'BUZZME'};
+    $scope.status_name = ['NO_DATA0','กำลังดำเนินการ','สำเร็จ','NO_DATA3','ไม่สำเร็จ','กำลังดึงเงินคืน','ดึงเงินคืนสำเร็จ'];
 
     $scope.m_12call_number = '';
     $scope.m_happy_number = '';
@@ -228,6 +229,9 @@ app.controller('topupController', function($scope,$http) {
                                 //processing, nothing to do
                             }else{
                                 //unknow error
+                                toastr.clear($scope.processQueue[transaction_id].toast_obj);
+                                clearInterval($scope.processQueue[transaction_id].interval_obj);
+                                toastr["error"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+'<br>เหตุผล: UNKNOW  ERROR',"ไม่สำเร็จ",$scope.toastOption);
                             }
                         });
 
