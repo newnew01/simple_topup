@@ -195,17 +195,48 @@ app.controller('topupController', function($scope,$http) {
         var network_name = $scope.network_name[network_code];
 
 
+
+
         if(number.length == 10 && cash > 0){
-            var toast_obj = toastr["info"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"<img src='/image/loading2.gif' height='15px'>  กำลังทำรายการ.......",$scope.toastOption);
-            var transaction_id = Math.floor((Math.random() * 10000) + 1);
+            data = {
+                'number':number,
+                'cash':cash,
+                'network_code':network_code,
+                'network':network_name,
+                'users':users
+            };
+            $http.post($scope.url +'wepay/topup',data).then(function (response) {
+                if(response.data.code == '00000'){
+                    var toast_obj = toastr["info"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"<img src='/image/loading2.gif' height='15px'>  กำลังทำรายการ.......",$scope.toastOption);
+                    var transaction_id = response.data.transaction_id;
 
-            var interval_obj = setInterval( function() {
-                //alert('number:'+number+'\ncash:'+cash+'\nnetwork:'+network_name);
-                $scope.setStatusSuccess(transaction_id);
-                toastr["success"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"สำเร็จ",$scope.toastOption);
-            }, 5000 );
+                    var interval_obj = setInterval( function() {
+                        //alert('number:'+number+'\ncash:'+cash+'\nnetwork:'+network_name);
 
-            $scope.processQueue[transaction_id] = {'toast_obj':toast_obj,'interval_obj':interval_obj};
+                        $http.post($scope.url +'wepay/topup-status',{'transaction_id':transaction_id}).then(function (response2) {
+                            if(response2.data.status == '2'){
+                                //success
+                                toastr.clear($scope.processQueue[transaction_id].toast_obj);
+                                clearInterval($scope.processQueue[transaction_id].interval_obj);
+                                toastr["success"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"สำเร็จ",$scope.toastOption);
+                            }else if(response2.data.status == '4'){
+                                //error network not match the number, refund
+                                toastr.clear($scope.processQueue[transaction_id].toast_obj);
+                                clearInterval($scope.processQueue[transaction_id].interval_obj);
+                                toastr["error"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+'<br>เหตุผล: '+response2.data.sms,"ไม่สำเร็จ",$scope.toastOption);
+                            }else if(response2.data.status == '1'){
+                                //processing, nothing to do
+                            }else{
+                                //unknow error
+                            }
+                        });
+
+                    }, 3000 );
+
+                    $scope.processQueue[transaction_id] = {'toast_obj':toast_obj,'interval_obj':interval_obj};
+                }
+            });
+
 
 
         }else{
