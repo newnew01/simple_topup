@@ -392,7 +392,7 @@
                 <td>
                   <span class="label label-warning" ng-if="data.status == 1"><% status_name[data.status] %></span>
                   <span class="label label-success" ng-if="data.status == 2"><% status_name[data.status] %></span>
-                  <span class="label label-success" ng-if="data.status == 4"><% status_name[data.status] %></span>
+                  <span class="label label-danger" ng-if="data.status == 4"><% status_name[data.status] %></span>
                   <span class="label label-warning" ng-if="data.status == 5"><% status_name[data.status] %></span>
                   <span class="label" style="background-color:#828282" ng-if="data.status == 6"><% status_name[data.status] %></span></td>
               </tr>
