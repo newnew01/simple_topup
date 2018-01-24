@@ -33,10 +33,6 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/wepay/topup', 'WepayController@topup');
 
-    Route::post('/wepay/callback/topup', 'WepayController@callbackTopup');
-
-    Route::post('/wepay/callback/refund',  'WepayController@callbackRefund');
-
     Route::post('/wepay/get-operator', 'WepayController@getOperator');
 
     Route::post('/wepay/topup-status', 'WepayController@getTopupStatus');
@@ -51,3 +47,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/log/entire/report-total','LogController@getEntireReportTotal');
     Route::post('/log/entire/report','LogController@getEntireReport');
 });
+
+Route::post('/wepay/callback/topup', 'WepayController@callbackTopup');
+
+Route::post('/wepay/callback/refund',  'WepayController@callbackRefund');
