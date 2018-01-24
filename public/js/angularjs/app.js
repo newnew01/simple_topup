@@ -52,6 +52,28 @@ app.controller('topupController', function($scope,$http) {
     $scope.m_168_number = '';
     $scope.m_buzzme_number = '';
 
+    $scope.toastOption = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-left",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    $scope.processQueue = [];
+
+
+
 
     $scope.getOperator = function () {
         if($scope.number_search.length == 10){
@@ -164,29 +186,28 @@ app.controller('topupController', function($scope,$http) {
         alert(123);
     }
 
-    $scope.topupRefill = function (network_code,number,cash,users) {
-        network_name = $scope.network_name[network_code];
+    $scope.setStatusSuccess = function (transaction_id) {
+        toastr.clear($scope.processQueue[transaction_id].toast_obj);
+        clearInterval($scope.processQueue[transaction_id].interval_obj);
+    }
 
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-left",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "0",
-            "extendedTimeOut": "0",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
+    $scope.topupRefill = function (network_code,number,cash,users) {
+        var network_name = $scope.network_name[network_code];
+
 
         if(number.length == 10 && cash > 0){
-            toastr["info"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name+"<br><img src='/image/loading2.gif' height='15px'> กำลังทำรายการ...")
+            var toast_obj = toastr["info"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"<img src='/image/loading2.gif' height='15px'>  กำลังทำรายการ.......",$scope.toastOption);
+            var transaction_id = Math.floor((Math.random() * 10000) + 1);
+
+            var interval_obj = setInterval( function() {
+                //alert('number:'+number+'\ncash:'+cash+'\nnetwork:'+network_name);
+                $scope.setStatusSuccess(transaction_id);
+                toastr["success"]('เติมเงิน: '+number+' ['+cash+' บาท]<br>เครือข่าย: '+network_name,"สำเร็จ",$scope.toastOption);
+            }, 5000 );
+
+            $scope.processQueue[transaction_id] = {'toast_obj':toast_obj,'interval_obj':interval_obj};
+
+
         }else{
             alert("ผิดพลาด! เบอร์โทรหรือราคาไม่ถูกต้อง");
         }

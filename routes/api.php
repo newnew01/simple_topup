@@ -175,6 +175,8 @@ Route::post('/wepay/callback/refund',  'WepayController@callbackRefund');
 
 Route::post('/wepay/get-operator', 'WepayController@getOperator');
 
+Route::post('/wepay/topup-status', 'WepayController@getTopupStatus');
+
 Route::get('/wepay/test', function () {
     $username = env("WEPAY_USERNAME");
     $password = env("WEPAY_PASSWORD");

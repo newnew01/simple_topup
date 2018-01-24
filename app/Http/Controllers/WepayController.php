@@ -196,5 +196,18 @@ class WepayController extends Controller
         return $response;
     }
 
+    public function getTopupStatus(Request $request)
+    {
+        $transaction_id = $request->input('transaction_id');
+
+        $topup_log = TopupLog::where('orderid','=',$transaction_id);
+        if($topup_log->exists()){
+            $topup_log = $topup_log->first();
+            return $topup_log;
+        }else{
+            return 'null';
+        }
+    }
+
 
 }
