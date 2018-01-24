@@ -325,6 +325,38 @@ app.controller('topupController', function($scope,$http) {
 
     }
 
+    $scope.refund = function (transaction_id,network_code) {
+        if(!confirm('ยืนยันการดึงเงินคืน?'))
+            return false;
+
+        data = {
+            'transaction_id':transaction_id,
+            'network_code':network_code,
+            'api_token':$scope.api_token
+        };
+
+        $http.post($scope.url +'wepay/refund',data).then(function (response) {
+            var result = response.data.split("|");
+            if(result[0] == "SUCCEED"){
+                toastr["info"]('ระบบจะดึงคืนภายใน 3นาที - 24 ชั่วโมง',"ทำรายการดึงคืนแล้ว",$scope.toastOption);
+
+                $http.post("/api/log/today",{'api_token':$scope.api_token})
+                    .then(function(response) {
+
+                        $scope.topup_histories = response.data;
+                        setTimeout(function () {
+                            $('.show_tooltip').tooltip();
+                        },500)
+                    });
+
+
+            }else {
+                toastr["error"]('เหตุผล: '+result[1],"ผิดพลาด",$scope.toastOption);
+            }
+        });
+
+    }
+
 
 
     $scope.showTopupHistory = function () {
