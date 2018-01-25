@@ -35,14 +35,14 @@ Route::get('/login/{token}', function ($token) {
                 Auth::login($user);
                 return redirect('/');
             }else{
-                echo 'ACCESS DENIED : UNAUTHORIZED';
+                return redirect('/err/1');
             }
         }else{
             //echo 'NOT OK'.$date_time_access.'|'.$date_time;
-            echo 'ACCESS DENIED : TIMEOUT';
+            return redirect('/err/2');
         }
     }else{
-        echo 'ACCESS DENIED : INVALID TOKEN STRING';
+        return redirect('/err/3');
     }
 
 
@@ -54,10 +54,16 @@ Route::get('/login/{token}', function ($token) {
     //return view('topup');
 });
 
+Route::get('/logout', function (){
+    Auth::logout();
+    return 'ออกจากระบบแล้ว';
+});
+Route::get('/err/{id}', 'ErrorController@showError');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        $user = User::find(1);
-        return view('topup')->with(compact('user'));
+        //$user = User::find(1);
+        return view('topup');
 
     });
 });

@@ -58,6 +58,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return response('UNAUTHORIZED|กรุณาเข้าระบบใหม่อีกครั้ง');
+        return redirect('/err/4');
     }
 }
