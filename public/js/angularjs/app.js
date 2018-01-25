@@ -5,11 +5,8 @@ var app = angular.module('topupApp', ['ngSanitize'], function($interpolateProvid
 
 
 
-app.controller('topupController', function($scope,$http) {
-
+app.controller('topupController', function($scope,$http,$window) {
     $scope.url = base_url+'/api/';
-    $scope.username = 'bmV3bmV3MDE=';
-    $scope.password = 'bmV3a2h1bmcwMQ=='
     $scope.users = branch_name;
     $scope.api_token = tData;
     $scope.balance = '<img src="/image/loading.gif" class="loading_balance">';
@@ -418,11 +415,11 @@ app.controller('topupController', function($scope,$http) {
 
     $scope.reloadBalance();
 
-    setInterval(function () {
+    $window.onfocus = function(){
         $http.get('/check-online').then(function (response) {
             if(response.data != 'online_ok'){
                 window.location = "/err/5";
             }
         });
-    },60000)
+    }
 });

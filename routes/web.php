@@ -16,6 +16,14 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        //$user = User::find(1);
+        return view('topup');
+
+    });
+});
+
 Route::get('/login/{token}', function ($token) {
     $shiftHour = 0;
     $token_data = base64_decode($token);
@@ -60,19 +68,14 @@ Route::get('/logout', function (){
 });
 
 
-
 Route::get('/err/{id}', 'ErrorController@showError');
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        //$user = User::find(1);
-        return view('topup');
-
-    });
-
-    Route::get('/check-online', function (){
+Route::get('/check-online', function () {
+    if (!Auth::guest())
         return 'online_ok';
-    });
+    else
+        return 'online_not_ok';
 });
+
+
 
