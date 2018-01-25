@@ -22,6 +22,9 @@ class ErrorController extends Controller
             case 4:
                 $error_msg = 'UNAUTHENTICATED|กรุณาเข้าสู่ระบบอีกครั้ง';
                 break;
+            case 5:
+                $error_msg = 'LOGIN_SESSION_EXPIRED|หมดเวลาการเชื่อมต่อ กรุณาเข้าสู่ระบบอีกครั้ง';
+                break;
         }
         return $error_msg;
     }

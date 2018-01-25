@@ -58,13 +58,21 @@ Route::get('/logout', function (){
     Auth::logout();
     return 'ออกจากระบบแล้ว';
 });
+
+
+
 Route::get('/err/{id}', 'ErrorController@showError');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         //$user = User::find(1);
         return view('topup');
 
+    });
+
+    Route::get('/check-online', function (){
+        return 'online_ok';
     });
 });
 

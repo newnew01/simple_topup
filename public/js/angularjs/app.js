@@ -416,9 +416,13 @@ app.controller('topupController', function($scope,$http) {
         $('#modal-topup-report-all').modal('show');
     }
 
-
-
-
-
     $scope.reloadBalance();
+
+    setInterval(function () {
+        $http.get('/check-online').then(function (response) {
+            if(response.data != 'online_ok'){
+                window.location = "/err/5";
+            }
+        });
+    },60000)
 });
