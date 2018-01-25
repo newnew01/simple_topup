@@ -381,7 +381,7 @@
                 <th>สถานะ</th>
               </tr>
               <tr ng-if="topup_histories.length == 0">
-                <td colspan="7" class="text-center">ไม่มีข้อมูล</td>
+                <td colspan="8" class="text-center">ไม่มีข้อมูล</td>
               </tr>
               <tr ng-repeat="data in topup_histories">
                 <td><% data.orderid %></td>
