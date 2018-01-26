@@ -92,7 +92,7 @@ class NotifyTodayReport extends Command
     {
         $start = (new Carbon('now'))->hour(0)->minute(0)->second(0);
         $end = (new Carbon('now'))->hour(23)->minute(59)->second(59);
-        $reports = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','1')->groupBy('branch_name','network')->
+        $reports = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','2')->groupBy('branch_name','network')->
         selectRaw('sum(cash) as sum, branch_name,network')->get();
 
         return $reports;
@@ -102,7 +102,7 @@ class NotifyTodayReport extends Command
     {
         $start = (new Carbon('now'))->hour(0)->minute(0)->second(0);
         $end = (new Carbon('now'))->hour(23)->minute(59)->second(59);
-        $report_totals = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','1')->groupBy('branch_name')->
+        $report_totals = TopupLog::whereBetween('created_at', [$start , $end])->where('status','=','2')->groupBy('branch_name')->
         selectRaw('sum(cash) as sum, branch_name')->get();
 
         return $report_totals;
